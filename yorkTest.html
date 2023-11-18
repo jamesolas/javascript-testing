@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+    <! put your HTML code to input data here >
+    User ID: 
+    <input type="text" id='userid'></input><br>
+    <div id="idValidation" style="color:red"></div>
+    First Name:
+    <input type="text" id='firstName'></input><br>
+    <div id="firstNameValidate" style="color:red"></div>
+    Last Name:
+    <input type="text" id='lastName'></input><br>
+    <div id="lastNameValidate" style="color:red"></div>
+    Brithday: 
+    <input type="date" id='birthday'></input><br>
+    <div id="birthdayValidate" style="color:red"></div>
+    <button onclick="submit()">Accept</button>
+    <p id="message"></p>
+</div>
+
+<script>
+    // put your JavaScript code to read HTML inputs
+    // and validate inputs here using if statements
+    // and document.getElementById().innerHTML to display results
+    // write your JS functions here
+    function submit(){
+        const uid = document.getElementById('userid').value;
+        const fname = document.getElementById('firstName').value;
+        const lname = document.getElementById('lastName').value;
+        const birthday = document.getElementById('birthday').value;
+
+        verifyId(uid)
+        verifyFName(fname);
+        verifyLName(lname);
+	    verifyBirthday(birthday)
+
+        if(verifyId(uid) && verifyFName(fname) && verifyLname(lname) && verifyBirthday(birthday)){
+            let days = dateDiff(birthday);
+            if(days < 18 * 365){
+                document.getElementById("message").innerHTML = "You are probably not old enough to take this class!";
+            }else{
+                document.getElementById("message").innerHTML = fname + " " + lname + " you have been breathing for " + days + " days!";
+            }
+        }
+    }
+
+    function verifyId(uid){
+        let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[a-zA-Z0-9]{8,12}$/;
+        if(!regex.test(uid)){
+            document.getElementById("idValidation").innerHTML = "Invalid UserID";
+            return false;
+        }else{
+            document.getElementById("idValidation").innerHTML = "";
+            return true;
+        }
+    }
+    function verifyFName(fName){
+        if(fName == ''){
+            document.getElementById("firstNameValidate").innerHTML = "Empty first name."
+            return false;
+        }else{
+            document.getElementById("firstNameValidate").innerHTML = "";
+            return true;
+        }
+    }
+    function verifyLName(lName){
+        if(lName == ''){
+            document.getElementById("lastNameValidate").innerHTML = "Empty last name."
+            return false;
+        }else{
+            document.getElementById("lastNameValidate").innerHTML = ""
+            return true;
+        }
+    }
+    function verifyBirthday(birthday){
+        if(birthday == ''){
+            document.getElementById("birthdayValidate").innerHTML = "Empty birthday."
+            return false;
+        }else{
+            document.getElementById("birthdayValidate").innerHTML = ""
+            return true;
+        }
+    }
+    function dateDiff(birthday){
+        const today = new Date();
+        const days = Math.round((today - new Date(birthday)) / (1000 * 60 * 60 * 24));
+        return days;
+    }
+    // write your JS Loop For here to print the Xs
+    // use something like document.write(str.padStart(i,"x") + "<br>");
+    let str = '';
+    for(let i = 1; i <= 20; i++){
+        document.write(str.padStart(i,'x') + "<br>");
+    }
+</script>
+
+</body>
+</html>
+ 
